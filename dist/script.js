@@ -6,11 +6,6 @@ navLinks.addEventListener('click',e=>{if(e.target.closest('a')){navToggle.setAtt
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
-const lightbox=document.getElementById('lightbox');
-document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>{const img=lightbox.querySelector('img');img.src=item.dataset.image;img.alt=item.dataset.caption;lightbox.querySelector('p').textContent=item.dataset.caption;lightbox.showModal()}));
-lightbox.querySelector('button').addEventListener('click',()=>lightbox.close());
-lightbox.addEventListener('click',e=>{if(e.target===lightbox)lightbox.close()});
-
 const form=document.getElementById('quote-form');
 const fileInput=form.querySelector('input[type=file]');
 const fileText=form.querySelector('.file-ui i');
