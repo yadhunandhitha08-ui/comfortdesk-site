@@ -14,3 +14,82 @@ form.querySelectorAll('select').forEach(select=>select.addEventListener('change'
 form.addEventListener('submit',e=>{e.preventDefault();const status=form.querySelector('.form-status');status.className='form-status';status.textContent='';const file=fileInput.files[0];const allowed=['application/pdf','image/jpeg','image/png','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'];if(file&&(!allowed.includes(file.type)||file.size>5*1024*1024)){status.classList.add('error');status.textContent='Please choose a PDF, JPG, PNG, DOC, or DOCX file no larger than 5 MB.';fileInput.focus();return}if(!form.checkValidity()){status.classList.add('error');status.textContent='Please complete the required fields and check the highlighted information.';form.reportValidity();return}status.classList.add('success');status.textContent='Thank you—your enquiry has been validated. Connect this form to the approved secure Zoho CRM endpoint to submit live leads.';form.querySelector('button[type=submit]').textContent='Enquiry Ready ✓'});
 
 document.getElementById('year').textContent=new Date().getFullYear();
+
+/* Login / Sign-up modal */
+const authModal = document.getElementById('auth-modal');
+const authPanels = authModal.querySelectorAll('[data-auth-panel]');
+
+function showAuthPanel(name) {
+  authPanels.forEach(panel => {
+    const active = panel.dataset.authPanel === name;
+    panel.hidden = !active;
+    if (active) {
+      const status = panel.querySelector('.form-status');
+      status.className = 'form-status';
+      status.textContent = '';
+      panel.querySelector('input').focus();
+    }
+  });
+}
+
+function openAuth(name) {
+  if (!authModal.open) authModal.showModal();
+  showAuthPanel(name);
+}
+
+document.querySelectorAll('[data-auth-open]').forEach(btn =>
+  btn.addEventListener('click', () => {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navLinks.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    openAuth(btn.dataset.authOpen);
+  })
+);
+
+authModal.querySelectorAll('[data-auth-switch]').forEach(btn =>
+  btn.addEventListener('click', () => showAuthPanel(btn.dataset.authSwitch))
+);
+
+/* Click outside the card closes it */
+authModal.addEventListener('click', e => {
+  if (e.target === authModal) authModal.close();
+});
+
+/* Mark fields touched so invalid styling only appears after interaction */
+authModal.querySelectorAll('.auth-form input').forEach(input =>
+  input.addEventListener('blur', () => input.classList.add('touched'))
+);
+
+function handleAuthSubmit(form, pendingLabel, successMessage) {
+  const submit = form.querySelector('button[type=submit]');
+  const originalLabel = submit.textContent;
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const status = form.querySelector('.form-status');
+    status.className = 'form-status';
+    status.textContent = '';
+    form.querySelectorAll('input').forEach(input => input.classList.add('touched'));
+
+    if (!form.checkValidity()) {
+      status.classList.add('error');
+      status.textContent = 'Please complete the required fields and check the highlighted information.';
+      form.reportValidity();
+      return;
+    }
+    status.classList.add('success');
+    status.textContent = successMessage;
+    submit.textContent = pendingLabel;
+    setTimeout(() => { submit.textContent = originalLabel; }, 4000);
+  });
+}
+
+handleAuthSubmit(
+  document.getElementById('login-form'),
+  'Checking…',
+  'Details validated. Connect this form to the secure authentication endpoint to sign users in.'
+);
+handleAuthSubmit(
+  document.getElementById('signup-form'),
+  'Submitting…',
+  'Details validated. Connect this form to the secure account-creation endpoint to register users.'
+);

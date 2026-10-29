@@ -24,7 +24,10 @@
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
       <div class="nav-links" id="nav-links">
         <a href="#home">Home</a><a href="#products">Products</a><a href="#services">Services</a><a href="#quality">Quality</a><a href="#about">About Us</a><a href="#contact">Contact</a>
-        <a class="button button-sm button-accent" href="#quote">Request a Quote</a>
+        <div class="nav-auth">
+          <button class="button button-sm button-ghost" type="button" data-auth-open="login">Log In</button>
+          <button class="button button-sm button-accent" type="button" data-auth-open="signup">Sign Up</button>
+        </div>
       </div>
     </nav>
   </header>
@@ -125,6 +128,49 @@
   <footer class="site-footer"><div class="container footer-grid"><div><a class="brand brand-light" href="#top"><span class="brand-mark"><i></i><i></i></span><span><b>ComfortDesk</b><small>OFFICE SOLUTIONS</small></span></a><p>Practical office furniture, professional delivery, and careful installation.</p><div class="socials" aria-label="Social media placeholders"><a href="#contact" aria-label="LinkedIn placeholder">in</a><a href="#contact" aria-label="Instagram placeholder">ig</a><a href="#contact" aria-label="Facebook placeholder">f</a></div></div><div><h3>Products</h3><a href="#products">Office Chairs</a><a href="#products">Desks &amp; Workstations</a><a href="#products">Conference Furniture</a><a href="#products">Storage Solutions</a></div><div><h3>Services</h3><a href="#services">Space Planning</a><a href="#services">Delivery &amp; Installation</a><a href="#quality">Quality &amp; Warranty</a><a href="#quote">Request a Quote</a></div><div><h3>Contact</h3><span>[Business phone]</span><span>[Business email]</span><span>[Office address]</span><a class="footer-cta" href="#quote">Request a Quote →</a></div></div><div class="container footer-bottom"><span>© <span id="year"></span> ComfortDesk Office Solutions.</span><div><a href="#contact">Privacy Policy</a><a href="#contact">Terms &amp; Conditions</a><a href="#quality">Warranty &amp; Returns</a></div></div></footer>
 
   <a class="whatsapp-float" href="#quote" aria-label="Start a WhatsApp enquiry after verified number is added"><span>◔</span><b>WhatsApp enquiry</b></a>
+  <dialog class="auth-modal" id="auth-modal" aria-labelledby="auth-title">
+    <form method="dialog" class="auth-close-form"><button class="auth-close" value="cancel" aria-label="Close">&times;</button></form>
+
+    <div class="auth-panel" data-auth-panel="login">
+      <p class="section-kicker">Welcome back</p>
+      <h2 id="auth-title" class="auth-heading">Log in to your<br>ComfortDesk account.</h2>
+      <form class="auth-form" id="login-form" novalidate>
+        <label for="login-email">Work email *
+          <input id="login-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+        </label>
+        <label for="login-password">Password *
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Your password">
+        </label>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <button class="button button-primary button-submit" type="submit">Log In</button>
+      </form>
+      <p class="auth-switch">New to ComfortDesk? <button type="button" data-auth-switch="signup">Create an account</button></p>
+    </div>
+
+    <div class="auth-panel" data-auth-panel="signup" hidden>
+      <p class="section-kicker">Get started</p>
+      <h2 class="auth-heading">Create your<br>ComfortDesk account.</h2>
+      <form class="auth-form" id="signup-form" novalidate>
+        <label for="signup-name">Full name *
+          <input id="signup-name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Your full name">
+        </label>
+        <label for="signup-org">Organisation name *
+          <input id="signup-org" name="organisation" type="text" autocomplete="organization" required minlength="2" placeholder="Your company or organisation">
+        </label>
+        <label for="signup-email">Work email *
+          <input id="signup-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+        </label>
+        <label for="signup-password">Password *
+          <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters">
+          <small class="auth-hint">Use 8 or more characters.</small>
+        </label>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <button class="button button-primary button-submit" type="submit">Create Account</button>
+      </form>
+      <p class="auth-switch">Already have an account? <button type="button" data-auth-switch="login">Log in</button></p>
+    </div>
+  </dialog>
+
   <script src="script.js"></script>
 </body>
 </html>
