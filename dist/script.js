@@ -88,8 +88,35 @@ handleAuthSubmit(
   'Checking…',
   'Details validated. Connect this form to the secure authentication endpoint to sign users in.'
 );
-handleAuthSubmit(
-  document.getElementById('signup-form'),
-  'Submitting…',
-  'Details validated. Connect this form to the secure account-creation endpoint to register users.'
-);
+/* Sign-up posts to Zoho CRM Web-to-Lead and creates a Lead.
+   Validate first; only let the real POST through once the form is valid. */
+const signupForm = document.getElementById('signup-form');
+signupForm.addEventListener('submit', e => {
+  const status = signupForm.querySelector('.form-status');
+  status.className = 'form-status';
+  status.textContent = '';
+  signupForm.querySelectorAll('input').forEach(input => input.classList.add('touched'));
+
+  if (!signupForm.checkValidity()) {
+    e.preventDefault();
+    status.classList.add('error');
+    status.textContent = 'Please complete the required fields and check the highlighted information.';
+    signupForm.reportValidity();
+    return;
+  }
+  /* Valid: allow the native POST through to Zoho CRM. */
+  const submit = signupForm.querySelector('button[type=submit]');
+  submit.disabled = true;
+  submit.textContent = 'Creating account...';
+});
+
+/* Zoho redirects back with ?signup=success once the Lead is created. */
+if (new URLSearchParams(location.search).get('signup') === 'success') {
+  openAuth('signup');
+  const panel = authModal.querySelector('[data-auth-panel=signup]');
+  const status = panel.querySelector('.form-status');
+  status.className = 'form-status success';
+  status.textContent = 'Account request received. Our team has your details and will be in touch shortly.';
+  panel.querySelector('form').reset();
+  history.replaceState(null, '', location.pathname);
+}

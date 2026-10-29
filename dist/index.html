@@ -150,19 +150,28 @@
     <div class="auth-panel" data-auth-panel="signup" hidden>
       <p class="section-kicker">Get started</p>
       <h2 class="auth-heading">Create your<br>ComfortDesk account.</h2>
-      <form class="auth-form" id="signup-form" novalidate>
+      <form class="auth-form" id="signup-form" novalidate
+            action="https://crm.zoho.in/crm/WebToLeadForm" method="POST" accept-charset="UTF-8">
+        <!-- Zoho CRM Web-to-Lead: do not remove these hidden fields -->
+        <input type="hidden" name="xnQsjsdp" value="abcb812821b1cc7cfb20204f77082dd38359a446e5f7888248785275cc01955b">
+        <input type="hidden" name="xmIwtLD" value="3acfabaa465f1b3abfef253a4707ad59bf4507c43130c451ecee70522c83d99c9caf394da59646206c40626f91e1a583">
+        <input type="hidden" name="actionType" value="TGVhZHM=">
+        <input type="hidden" name="returnURL" value="https://yadhunandhitha08-ui.github.io/comfortdesk-site/?signup=success">
+        <input type="hidden" name="zc_gad" id="zc_gad" value="">
+        <input type="hidden" name="Lead Source" value="Website Sign Up">
+        <input type="text" name="aG9uZXlwb3Q" value="" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <label for="signup-name">Full name *
-          <input id="signup-name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Your full name">
+          <input id="signup-name" name="Last Name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Your full name">
         </label>
         <label for="signup-org">Organisation name *
-          <input id="signup-org" name="organisation" type="text" autocomplete="organization" required minlength="2" placeholder="Your company or organisation">
+          <input id="signup-org" name="Company" type="text" autocomplete="organization" required minlength="2" maxlength="200" placeholder="Your company or organisation">
         </label>
         <label for="signup-email">Work email *
-          <input id="signup-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+          <input id="signup-email" name="Email" type="email" autocomplete="email" required maxlength="100" placeholder="you@company.com">
         </label>
         <label for="signup-password">Password *
-          <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters">
-          <small class="auth-hint">Use 8 or more characters.</small>
+          <input id="signup-password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters">
+          <small class="auth-hint">Use 8 or more characters. Your password is never sent to our CRM.</small>
         </label>
         <p class="form-status" role="status" aria-live="polite"></p>
         <button class="button button-primary button-submit" type="submit">Create Account</button>
